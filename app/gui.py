@@ -12,8 +12,8 @@ import time
 #password = str(input())
 ID = ""
 PW = ""
-Time1 = ""
-Time2 = ""
+Time1 = "16:02"
+Time2 = "16:03"
 k = 0
 log = ""
 
@@ -21,21 +21,13 @@ def api_st():
     global log_dis
     log_dis.setText("작성 중")
     log_dis.setText(api(ID, PW))
-
-def f():
-    global k
-    k += 1
-    k = k%2
+    print(ID, PW)
 
 
 def check():
     global Threading
-    if k == 0:
-        schedule.every().day.at(Time1).do(api_st)
-        schedule.every().day.at(Time1).do(f)
-    else:
-        schedule.every().day.at(Time2).do(api_st)
-        schedule.every().day.at(Time2).do(f)
+    schedule.every().day.at(Time1).do(api_st)
+    schedule.every().day.at(Time2).do(api_st)
 
     while Threading:
         schedule.run_pending()
@@ -83,17 +75,17 @@ class Window(QWidget):
         password.setEchoMode(QLineEdit.Password)
         password.textChanged[str].connect(self.setpw)
 
-        time1 = QTimeEdit(self)
-        time1.setTime(QTime(9,00))
-        time1.setTimeRange(QTime(00, 00), QTime(12, 00))
-        time1.setDisplayFormat('hh:mm')
-        time1.timeChanged.connect(self.settime1)
+        #time1 = QTimeEdit(self)
+        #time1.setTime(QTime(9,00))
+        #time1.setTimeRange(QTime(00, 00), QTime(12, 00))
+        #time1.setDisplayFormat('hh:mm')
+        #time1.timeChanged.connect(self.settime1)
 
-        time2 = QTimeEdit(self)
-        time2.setTime(QTime(13,00))
-        time2.setTimeRange(QTime(12, 00), QTime(24, 00))
-        time2.setDisplayFormat('hh:mm')
-        time2.timeChanged.connect(self.settime2)
+        #time2 = QTimeEdit(self)
+        #time2.setTime(QTime(13,00))
+        #time2.setTimeRange(QTime(12, 00), QTime(24, 00))
+        #time2.setDisplayFormat('hh:mm')
+        #ime2.timeChanged.connect(self.settime2)
 
 
         btn = QPushButton('JAGAJINDAN ON', self)
@@ -113,9 +105,9 @@ class Window(QWidget):
         vbox.addWidget(lbl4)
         vbox.addWidget(password)
         vbox.addWidget(lbl1)
-        vbox.addWidget(time1)
+        #vbox.addWidget(time1)
         vbox.addWidget(lbl2)
-        vbox.addWidget(time2)
+        #vbox.addWidget(time2)
         vbox.addWidget(btn)
         vbox.addWidget(btn2)
         vbox.addWidget(lbl5)
@@ -163,6 +155,7 @@ class Window(QWidget):
         btn2.setCheckable(False)
         Threading = False
         self.thread.quit()
+        schedule.clear()
         log_dis.setText("Turn Off")
 
 
