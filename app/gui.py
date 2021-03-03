@@ -12,10 +12,10 @@ import time
 #password = str(input())
 ID = ""
 PW = ""
-Time1 = "16:02"
-Time2 = "16:03"
-k = 0
+Time1 = "09:00"
+Time2 = "13:00"
 log = ""
+Threading = False
 
 def api_st():
     global log_dis
@@ -51,12 +51,7 @@ class Window(QWidget):
         self.initUI()
 
     def initUI(self):
-        global id, password, btn, btn2, k, log_dis
-
-        if time.localtime().tm_hour < 12:
-            k = 0
-        if time.localtime().tm_hour >= 12:
-            k = 1
+        global id, password, btn, btn2, log_dis, time1, time2
 
 
         self.setGeometry(300, 300, 400, 200)
@@ -75,17 +70,17 @@ class Window(QWidget):
         password.setEchoMode(QLineEdit.Password)
         password.textChanged[str].connect(self.setpw)
 
-        #time1 = QTimeEdit(self)
-        #time1.setTime(QTime(9,00))
-        #time1.setTimeRange(QTime(00, 00), QTime(12, 00))
-        #time1.setDisplayFormat('hh:mm')
-        #time1.timeChanged.connect(self.settime1)
+        time1 = QTimeEdit(self)
+        time1.setTime(QTime(9,00))
+        time1.setTimeRange(QTime(00, 00), QTime(12, 00))
+        time1.setDisplayFormat('hh:mm')
+        time1.timeChanged.connect(self.settime1)
 
-        #time2 = QTimeEdit(self)
-        #time2.setTime(QTime(13,00))
-        #time2.setTimeRange(QTime(12, 00), QTime(24, 00))
-        #time2.setDisplayFormat('hh:mm')
-        #ime2.timeChanged.connect(self.settime2)
+        time2 = QTimeEdit(self)
+        time2.setTime(QTime(13,00))
+        time2.setTimeRange(QTime(12, 00), QTime(24, 00))
+        time2.setDisplayFormat('hh:mm')
+        time2.timeChanged.connect(self.settime2)
 
 
         btn = QPushButton('JAGAJINDAN ON', self)
@@ -105,9 +100,9 @@ class Window(QWidget):
         vbox.addWidget(lbl4)
         vbox.addWidget(password)
         vbox.addWidget(lbl1)
-        #vbox.addWidget(time1)
+        vbox.addWidget(time1)
         vbox.addWidget(lbl2)
-        #vbox.addWidget(time2)
+        vbox.addWidget(time2)
         vbox.addWidget(btn)
         vbox.addWidget(btn2)
         vbox.addWidget(lbl5)
@@ -138,21 +133,25 @@ class Window(QWidget):
 
 
     def hongmin(self):
-        global id, password, btn, btn2, Threading, log_dis
+        global id, password, btn, btn2, Threading, log_dis, time1, time2
         id.setReadOnly(True)
         password.setReadOnly(True)
         btn.setCheckable(False)
         btn2.setCheckable(True)
+        time1.setReadOnly(True)
+        time2.setReadOnly(True)
         Threading = True
         self.thread.start()
         log_dis.setText("Turn On")
 
     def turnoff(self):
-        global id, password, btn, btn2, Threading, log_dis
+        global id, password, btn, btn2, Threading, log_dis, time1, time2
         id.setReadOnly(False)
         password.setReadOnly(False)
         btn.setCheckable(True)
         btn2.setCheckable(False)
+        time1.setReadOnly(False)
+        time2.setReadOnly(False)
         Threading = False
         self.thread.quit()
         schedule.clear()

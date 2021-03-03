@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['gui.py'],
-             pathex=['C:\\Users\\SAMSUNG\\OneDrive\\바탕 화면\\정보숙제\\연습\\체온체크\\app'],
+             pathex=['C:\\Users\\SAMSUNG\\OneDrive\\문서\\jagajindan\\app'],
              binaries=[],
              datas=[],
              hiddenimports=[],
